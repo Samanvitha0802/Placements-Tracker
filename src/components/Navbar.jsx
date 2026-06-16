@@ -1,10 +1,17 @@
-function Navbar()
-{
-      return (
-           <div>
-               <h2>Placement Tracker</h2>
-          </div>
-      );
+
+import {Link} from "react-router-dom";
+function Navbar() {
+    return (
+        <nav>
+            <Link to="/">
+                Home
+            </Link>
+            {" / "}
+            <Link to="./students">
+                Students
+            </Link>
+        </nav>
+    );
 }
 
 export default Navbar;
