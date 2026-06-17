@@ -1,9 +1,23 @@
 import { useState } from "react";
 
-function StudentForm() {
+function StudentForm({addStudent}) {
     const [name, setName] = useState("");
     const [branch, setBranch] = useState("");
     const [cgpa, setCgpa] = useState("");
+
+    function handleSubmit()
+    {
+           const student={
+            name,branch,cgpa
+           };
+           addStudent(student);
+
+           setName("");
+           setBranch("");
+           setCgpa("");
+    }
+
+   
     return (<div>
 
         <input
@@ -23,17 +37,22 @@ function StudentForm() {
         <br />
         <br />
         <input
-            type="text"
+            type="number"
             placeholder="Enter CGPA"
             value={cgpa}
-            onChange={(e) => setCgpa(Number(e.target.value))}
+           onChange={(e) => setCgpa(e.target.value)}
         />
         <br />
         <p>Name: {name}</p>
         <p>Branch: {branch}</p>
         <p>CGPA: {cgpa}</p>
-    </div>
-    );
+   
 
+        <button onClick={handleSubmit}>Submit</button>
+         <br/>
+         <br/>
+    </div>
+    )
+    
 }
 export default StudentForm;

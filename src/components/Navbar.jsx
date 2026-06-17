@@ -7,7 +7,7 @@ function Navbar() {
                 Home
             </Link>
             {" / "}
-            <Link to="./students">
+            <Link to="/students">
                 Students
             </Link>
         </nav>
