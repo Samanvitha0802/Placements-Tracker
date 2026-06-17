@@ -1,58 +1,54 @@
-import { useState } from "react";
+function StudentForm({name,setName,branch,setBranch,cgpa,setCgpa,addOrUpdateStudent,editIndex,}) {
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="Enter Name"
+        value={name}
+        onChange={(e) =>
+          setName(e.target.value)
+        }
+      />
 
-function StudentForm({addStudent}) {
-    const [name, setName] = useState("");
-    const [branch, setBranch] = useState("");
-    const [cgpa, setCgpa] = useState("");
+      <br />
+      <br />
 
-    function handleSubmit()
-    {
-           const student={
-            name,branch,cgpa
-           };
-           addStudent(student);
+      <input
+        type="text"
+        placeholder="Enter Branch"
+        value={branch}
+        onChange={(e) =>
+          setBranch(e.target.value)
+        }
+      />
 
-           setName("");
-           setBranch("");
-           setCgpa("");
-    }
+      <br />
+      <br />
 
-   
-    return (<div>
+      <input
+        type="number"
+        placeholder="Enter CGPA"
+        value={cgpa}
+        onChange={(e) =>
+          setCgpa(e.target.value)
+        }
+      />
 
-        <input
-            type="text"
-            placeholder="Enter Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-        />
-        <br />
-        <br />
-        <input
-            type="text"
-            placeholder="Enter Branch"
-            value={branch}
-            onChange={(e) => setBranch(e.target.value)}
-        />
-        <br />
-        <br />
-        <input
-            type="number"
-            placeholder="Enter CGPA"
-            value={cgpa}
-           onChange={(e) => setCgpa(e.target.value)}
-        />
-        <br />
-        <p>Name: {name}</p>
-        <p>Branch: {branch}</p>
-        <p>CGPA: {cgpa}</p>
-   
+      <br />
+      <br />
 
-        <button onClick={handleSubmit}>Submit</button>
-         <br/>
-         <br/>
+      <button
+        onClick={addOrUpdateStudent}
+      >
+        {editIndex === null
+          ? "Add Student"
+          : "Update Student"}
+      </button>
+
+      <br />
+      <br />
     </div>
-    )
-    
+  );
 }
+
 export default StudentForm;
