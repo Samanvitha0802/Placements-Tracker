@@ -15,7 +15,7 @@ function Students() {
   //GET CALL
   useEffect(() => {
     axios
-      .get("http://localhost:5000/students")
+      .get("http://localhost:3000/students")
       .then((response) => {
         setStudents(response.data);
       })
@@ -28,8 +28,8 @@ function Students() {
   // POST CALL
   async function addStudent(student) {
     try {
-      const response = await axios.post("http://localhost:5000/students", student);
-      setStudents([...students, response.data]);
+      const response = await axios.post("http://localhost:3000/students", student);
+     setStudents((prev) => [...prev, response.data]);
     }
     catch (error) {
       console.log(error);
@@ -40,7 +40,7 @@ function Students() {
   async function deleteStudent(id) {
     try {
       await axios.delete(
-        `http://localhost:5000/students/${id}`
+        `http://localhost:3000/students/${id}`
       );
 
       const updatedStudents =
@@ -59,7 +59,7 @@ function Students() {
   async function updateStudent(student) {
   try {
     const response = await axios.put(
-      `http://localhost:5000/students/${editIndex}`,
+      `http://localhost:3000/students/${editIndex}`,
       student
     );
 

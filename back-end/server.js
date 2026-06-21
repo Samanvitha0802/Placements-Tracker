@@ -1,13 +1,21 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
-// Temporary database (in-memory)
-let students = [
-  { id: 1, name: "Rahul", branch: "ECE", cgpa: 8.5 },
-  { id: 2, name: "Samanvitha", branch: "CSE", cgpa: 9.2 }
-];
+const mongoose = require("mongoose");
+mongoose.connect("mongodb://127.0.0.1:27017/studentdb")
+  .then(() => {
+    console.log("MongoDB Connected");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+
+
 
 app.get("/students", (req, res) => {
   res.json(students);
