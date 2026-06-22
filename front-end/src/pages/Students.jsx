@@ -44,7 +44,7 @@ function Students() {
       );
 
       const updatedStudents =
-        students.filter((student) => student.id !== id);
+        students.filter((student) => student._id !== id);
 
       setStudents(updatedStudents);
 
@@ -65,7 +65,7 @@ function Students() {
 
     const updatedStudents =
       students.map((s) =>
-        s.id === editIndex
+        s._id === editIndex
           ? response.data
           : s
       );
@@ -81,9 +81,19 @@ function startEdit(student) {
   setBranch(student.branch);
   setCgpa(student.cgpa);
 
-  setEditIndex(student.id);
+  setEditIndex(student._id);
 }
   async function addOrUpdateStudent() {
+    
+      if (!name || !branch || !cgpa) {
+    alert("All fields are required");
+    return;
+  }
+
+ if (Number(cgpa) < 0 || Number(cgpa) > 10) {
+  alert("CGPA must be between 0 and 10");
+  return;
+}
     const student = {
       name,
       branch,
@@ -147,7 +157,7 @@ function startEdit(student) {
             </button>
 
             <button
-              onClick={() => deleteStudent(student.id)}
+              onClick={() => deleteStudent(student._id)}
             >
               Delete
             </button>

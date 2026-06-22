@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-
+const Student = require("./models/Student");
 app.use(cors());
 app.use(express.json());
 
@@ -17,55 +17,84 @@ mongoose.connect("mongodb://127.0.0.1:27017/studentdb")
 
 
 
-app.get("/students", (req, res) => {
-  res.json(students);
-});
-
-app.get("/students/:id", (req, res) => {
-  const id = Number(req.params.id);
-
-  const student = students.find((s) => s.id === id);
-
-  if (!student) {
-    return res.status(404).send("Student not found");
+app.get("/students", async (req, res) => {
+  try {
+    const students = await Student.find();
+    res.json(students);
   }
-
-  res.json(student);
-});
-
-app.post("/students", (req, res) => {
-  const newStudent = {
-    id: students.length + 1,
-    ...req.body
-  };
-
-  students.push(newStudent);
-
-  res.status(201).json(newStudent);
-});
-
-app.put("/students/:id", (req, res) => {
-  const id = Number(req.params.id);
-
-  const index = students.findIndex((s) => s.id === id);
-
-  if (index === -1) {
-    return res.status(404).send("Student not found");
+  catch (error) {
+    res.status(500).json({ message: error.message });
   }
-
-  students[index] = { id, ...req.body };
-
-  res.json(students[index]);
 });
 
-app.delete("/students/:id", (req, res) => {
-  const id = Number(req.params.id);
 
-  students = students.filter((s) => s.id !== id);
-
-  res.send("Student deleted successfully");
+app.get("/students/:id", async (req, res) => {
+  try {
+    const students = await Student.findbyId(req.params.id);
+    if (!student) {
+      return res.status(404).json({
+        message: "Student not found"
+      });
+    }
+    res.json(students);
+  }
+  catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
+
+app.post("/students", async (req, res) => {
+  try {
+    const student = await Student.create(req.body);
+    res.status(201).json(student);
+  }
+  catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+app.put("/students/:id", async (req, res) => {
+  try {
+    const student =
+      await Student.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true }
+      );
+
+    if (!student) {
+      return res
+        .status(404)
+        .json({ message: "Student not found" });
+    }
+
+    res.json(student);
+
+  } catch (error) {
+    res.status(500)
+      .json({ message: error.message });
+  }
+});
+
+app.delete("/students/:id", async (req, res) => {
+  try {
+    const student = await Student.findByIdAndDelete(req.params.id);
+
+    if (!student) {
+      return res.status(404).json({
+        message: "Student not found"
+      });
+    }
+
+    res.json({
+      message: "Student deleted successfully"
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");

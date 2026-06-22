@@ -33,10 +33,9 @@ function StudentForm({name,setName,branch,setBranch,cgpa,setCgpa,addOrUpdateStud
           setCgpa(e.target.value)
         }
       />
-
+  
+       <br />
       <br />
-      <br />
-
       <button
         onClick={addOrUpdateStudent}
       >
@@ -45,6 +44,9 @@ function StudentForm({name,setName,branch,setBranch,cgpa,setCgpa,addOrUpdateStud
           : "Update Student"}
       </button>
 
+      <br />
+      <br />
+    
       <br />
       <br />
     </div>
